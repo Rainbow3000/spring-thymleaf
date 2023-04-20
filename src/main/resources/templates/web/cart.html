@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+
+    <link th:href="@{/styles/css/web/index.css}" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap"
+            rel="stylesheet"
+    />
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+            integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    />
+</head>
+<body>
+<nav style="border-bottom:1px solid orangered">
+    <div class="nav">
+        <div class="nav-head">
+            <div class="nav-head-left">
+                <p style="font-weight:bold">Chào mừng bạn đến với Shop !</p>
+            </div>
+            <div class="nav-head-right">
+                <ul>
+
+                    <li>
+                        <i class="fa-sharp fa-solid fa-truck-fast"></i> Kiểm tra đơn hàng
+                    </li>
+
+                    <li> <a class="account" href="/login" th:text="${session.username} ?: 'Tài khoản'"><i class="fa-solid fa-user"  > </i></a></li>
+
+                    <li th:if="${session.username}">
+                        <a href="/logout">
+                            <button style="
+                        width: 90px;
+                        height: 30px;
+                        background-color: orangered;
+                        color: white;
+                        border: none;
+                        border-radius: 5px;
+                        cursor: pointer;
+" >Đăng xuất</button>
+                        </a>
+
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="nav-head-center-wrap">
+            <div class="nav-head-center">
+                <div class="nav-head-center-logo">
+                    <a href="/">
+                        <img width="140px" height="90px" th:src="@{/images/glasses.webp}" />
+                    </a>
+                </div>
+                <div class="nav-head-center-seach">
+                    <div>
+                        <input placeholder="Tìm kiếm sản phẩm..." type="text" />
+                        <div class="seach-icon">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="nav-head-center-info">
+                    <ul>
+
+                        <li class="nav-cart">
+                            <a href="/cart">
+                                <i style="color:black" class="fa-sharp fa-solid fa-cart-shopping"></i>
+                                <div th:text="${session.count}" class="quantity-cart">
+
+                                </div>
+                            </a>
+                            Giỏ hàng
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</nav>
+
+<div style="width:1600px;margin:0 auto;margin-top: 50px;">
+
+    <section>
+        <div class="table-cart">
+            <div class="container">
+                <h1 class="title-cart">Giỏ hàng</h1>
+                <table style="text-align:center">
+                    <tr class="tr-1">
+                        <th>Xóa</th>
+                        <th>Ảnh</th>
+                        <th>Tên</th>
+                        <th>Giá</th>
+                        <th>Số lượng</th>
+                        <th>Tổng tiền</th>
+                    </tr>
+                    <tr style="
+                                border-bottom: 1px solid black;
+
+                            "  th:each="product: ${session.products}">
+                        <td style="color:red" class="td-remove center"><a th:href="@{/cart-delete/{id}(id = ${product.id})}"><i class="fa-solid fa-trash"></i></a></td>
+                        <td class="td-img"><a class="cart-img" href=""><img th:src="${product.productImage}" alt=""></a></td>
+                        <td style="color:black" class="td-left product-name" th:text="${product.productName}"><a href=""></a></td>
+                        <td style="color:black" class="price-item" th:text="${product.priceNew}"><a href=""></a></td>
+                        <td class="td-left">
+                            <div class="ud-cart">
+                                <a th:href="@{/cart-update-decrement/{id}(id = ${product.id})}" >
+                                    <div class="decrement ud">–</div>
+                                </a>
+
+                                <div class="quantity-item" th:text="${product.quantity}"></div>
+                                <a th:href="@{/cart-update-increment/{id}(id = ${product.id})}">
+                                    <div class="increment ud">+</div>
+                                </a>
+                            </div>
+                        </td>
+                        <mark>
+                            <td  style="border:none;width: 100%; font-weight:bold;background-color:yellow;  height: 100%;display: flex;justify-content: center;align-items: center;margin-top: 25%;" th:text="${product.totalPrice}" class="td-left center price-item"></td> </mark>
+                    </tr>
+
+
+                </table>
+            </div>
+        </div>
+    </section>
+    <!-- END product-cart -->
+    <section>
+        <div class="cart-totals">
+            <div class="container">
+                <div class="checkout">
+                    <h1>Tổng tiền giỏ hàng</h1>
+                    <div class="review">
+                        <div class="result">
+                            <table class="table-2">
+                                <tr>
+                                    <th>Tạm tính</th>
+                                    <mark>
+                                        <th style="background-color:yellow" class="price-item" th:text="${session.totalAll}"></th>
+                                    </mark>
+
+                                </tr>
+                                <tr>
+                                    <td class="td-img center">Giao hàng</td>
+                                    <td class="td-left center">
+                                        Miễn phí giao hàng !
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="total-price center">Tổng tiền</td>
+                                    <mark>
+                                        <td style="background-color:yellow" th:text="${session.totalAll}" class="price-item total-price center"></td>
+                                    </mark>
+
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="info-custom">
+                            <form class="form-custom" action="/order" method="post">
+                                <div class="review-custom">
+                                    <label ><b>Tên Anh/Chị:</b></label>
+                                    <input type="text" placeholder="Tên khách hàng" name="userName" required>
+                                    <label ><b>Số điện thoại:</b></label>
+                                    <input type="text" placeholder="Số điện thoại" name="userPhone" required>
+                                    <label ><b>Địa chỉ:</b></label>
+                                    <input type="text" placeholder="Địa chỉ" name="userAddress" required>
+                                    <button class="btn-checkout">Đặt hàng</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- =====End cart===== -->
+
+</div>
+
+
+<div class="footer">
+
+    <div class="footer-newsletter-wrap">
+        <div class="footer-newsletter">
+            <div class="footer-newsletter-left">
+                <div>
+                    <p style="font-weight:bold"><i style="color: white ;" class="fa-solid fa-envelope"></i>Đăng nhập để nhận các ưu đãi từ Shop !</p>
+                </div>
+
+            </div>
+            <div class="footer-newsletter-right">
+                <input style="
+    border: 1px solid gray;
+" placeholder="Nhập địa chỉ email của bạn" type="text">
+                <button>Gửi</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" th:src="@{/styles/js/admin/index3.js}"></script>
+<script type="text/javascript" th:src="@{/styles/js/admin/index4.js}"></script>
+</body>
+
+</html>
+
+
+

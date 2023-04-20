@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+
+    <link th:href="@{/styles/css/web/index.css}" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap"
+            rel="stylesheet"
+    />
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+            integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    />
+</head>
+<body>
+<nav style="border-bottom:1px solid orangered">
+    <div class="nav">
+        <div class="nav-head">
+            <div class="nav-head-left">
+                <p style="font-weight:bold">Chào mừng bạn đến với Shop !</p>
+            </div>
+            <div class="nav-head-right">
+                <ul>
+
+                    <li>
+                        <i class="fa-sharp fa-solid fa-truck-fast"></i> Kiểm tra đơn hàng
+                    </li>
+
+                    <li> <a class="account" href="/login" th:text="${session.username} ?: 'Tài khoản'"><i class="fa-solid fa-user"  > </i></a></li>
+
+                    <li th:if="${session.username}">
+                        <a href="/logout">
+                            <button style="
+                        width: 90px;
+                        height: 30px;
+                        background-color: orangered;
+                        color: white;
+                        border: none;
+                        border-radius: 5px;
+                        cursor: pointer;
+" >Logout</button>
+                        </a>
+
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="nav-head-center-wrap">
+            <div class="nav-head-center">
+                <div class="nav-head-center-logo">
+                    <a href="/">
+                        <img width="140px" height="90px" th:src="@{/images/glasses.webp}" />
+                    </a>
+                </div>
+                <div class="nav-head-center-seach">
+                    <div>
+                        <input placeholder="Tìm kiếm sản phẩm..." type="text" />
+                        <div class="seach-icon">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="nav-head-center-info">
+                    <ul>
+
+                        <li class="nav-cart">
+                            <a href="/cart">
+                                <i style="color:black" class="fa-sharp fa-solid fa-cart-shopping"></i>
+                                <div th:text="${session.count}" class="quantity-cart">
+
+                                </div>
+                            </a>
+                            Giỏ hàng
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</nav>
+
+<section style="margin-bottom:30px">
+    <div style="min-height:500px" class="user-login">
+        <div class="container-login">
+            <h1 class="tiltle-login">Đăng Nhập</h1>
+            <div class=" login">
+                <span style="color:red" th:text="${session.errorLogin}"></span>
+                <form class="form-login" action="/login" method="post">
+                    <div class="review-login">
+                        <label ><b>Tài khoản</b></label>
+                        <input type="text" placeholder="Nhập tên tài khoản" name="userName" required>
+
+                        <label ><b>Mật khẩu</b></label>
+                        <input type="password" placeholder="Nhập mật khẩu" name="password" required>
+                        <a style="
+    text-decoration: underline;
+    color: red;
+" href="/register">Chưa có tài khoản ?</a>
+                        <div class="">
+                            <button style="width: 150px;
+    height: 40px;
+    background: none;
+    cursor:pointer;
+    margin-top: 20px;
+    border-radius: 5px;"  type="submit">Đăng Nhập</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="footer">
+
+    <div class="footer-newsletter-wrap">
+        <div class="footer-newsletter">
+            <div class="footer-newsletter-left">
+                <div>
+                    <p style="font-weight:bold"><i style="color: white ;" class="fa-solid fa-envelope"></i>Đăng nhập để nhận các ưu đãi từ Shop !</p>
+                </div>
+
+            </div>
+            <div class="footer-newsletter-right">
+                <input style="
+    border: 1px solid gray;
+" placeholder="Nhập địa chỉ email của bạn" type="text">
+                <button>Gửi</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" th:src="@{/styles/js/admin/index3.js}"></script>
+<script type="text/javascript" th:src="@{/styles/js/admin/index4.js}"></script>
+</body>
+
+</html>
+
+
+
